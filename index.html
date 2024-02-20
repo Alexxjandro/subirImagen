@@ -20,53 +20,38 @@
     </script>
 </head>
 <body>
-
-<div>Subir archivo a Firebase v3</div>
+    <input type="file" id="seleccionadorDeArchivo" style="display: none;" />
+    <button id="botonSubir">Seleccionar y Subir Imagen</button>
+<div>Subir archivo a Firebase v4 boton</div>
 <script>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Subir archivo a Firebase v3 redirigir url</title>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
-    <script>
-      // Configuración de Firebase
-      const firebaseConfig = {
-  apiKey: "AIzaSyCDpveqRG8rSmz48JAqCzHEMyKlypJU4Lk",
-  authDomain: "nikucar-apk.firebaseapp.com",
-  databaseURL: "https://nikucar-apk-default-rtdb.firebaseio.com",
-  projectId: "nikucar-apk",
-  storageBucket: "nikucar-apk.appspot.com",
-  messagingSenderId: "558093127301",
-  appId: "1:558093127301:web:d11868ac74f989b29b63ec"
-};
-      // Inicializar Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
-</head>
-<body>
+document.getElementById('botonSubir').addEventListener('click', function() {
+    // Simula un clic en el input de tipo file
+    document.getElementById('seleccionadorDeArchivo').click();
+});
 
-<div>Subir archivo a Firebase</div>
-<script>
+document.getElementById('seleccionadorDeArchivo').addEventListener('change', function() {
+    // Verifica si un archivo fue seleccionado
+    var archivoSeleccionado = this.files[0];
+    if (archivoSeleccionado) {
+        // Pasa el archivo a la función subirArchivo
+        subirArchivo(archivoSeleccionado);
+    }
+});
+
 function subirArchivo(file) {
     var rutaDeCarga = 'media/proj_iDtR68Uec2W1ohmGzgtMRo/app_aYniA6tJPMc2DH943XAihq/dataApplications/' + file.name;
     var storageRef = firebase.storage().ref(rutaDeCarga);
-
+  
     storageRef.put(file).then(function(snapshot) {
         console.log('Archivo subido con éxito');
         snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log('Archivo disponible en:', downloadURL);
-            // Redirigir la página añadiendo la URL de la imagen como parámetro
             window.location.href = window.location.href.split('?')[0] + '?url=' + encodeURIComponent(downloadURL);
         });
     }).catch(function(error) {
         console.error('Error al subir el archivo:', error);
     });
 }
-</script>
-</body>
-</html>
-
 
 </script>
 </body>
