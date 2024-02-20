@@ -32,11 +32,14 @@
         console.log('Archivo subido con éxito');
         snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log('Archivo disponible en:', downloadURL);
+            // Muestra la URL en una alerta
+            alert('Archivo disponible en: ' + downloadURL);
         });
     }).catch(function(error) {
         console.error('Error al subir el archivo:', error);
     });
 }
+
 
 </script>
 </body>
