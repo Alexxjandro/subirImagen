@@ -22,7 +22,7 @@
 <body>
     <input type="file" id="seleccionadorDeArchivo" style="display: none;" />
     <button id="botonSubir">Seleccionar y Subir Imagen</button>
-<div>Subir archivo a Firebase v4 boton</div>
+<div>Subir archivo a Firebase v5</div>
 <script>
 document.getElementById('botonSubir').addEventListener('click', function() {
     // Simula un clic en el input de tipo file
@@ -39,19 +39,26 @@ document.getElementById('seleccionadorDeArchivo').addEventListener('change', fun
 });
 
 function subirArchivo(file) {
-    var rutaDeCarga = 'media/proj_iDtR68Uec2W1ohmGzgtMRo/app_aYniA6tJPMc2DH943XAihq/dataApplications/' + file.name;
-    var storageRef = firebase.storage().ref(rutaDeCarga);
-  
+    // Asegúrate de que 'file' es un objeto de tipo 'File' y se ha obtenido, por ejemplo, a través de un input de tipo 'file'.
+    // Creamos una referencia a Firebase Storage indicando la ruta donde deseamos guardar el archivo.
+    var storageRef = firebase.storage().ref('prueba/' + file.name);
+
+    // Usamos el método 'put' del objeto storageRef para subir el archivo a Firebase Storage.
     storageRef.put(file).then(function(snapshot) {
-        console.log('Archivo subido con éxito');
+        console.log('¡La subida del archivo fue un éxito!');
+        // Obtenemos la URL del archivo con el método getDownloadURL y se la mostramos al usuario.
         snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            console.log('Archivo disponible en:', downloadURL);
+            console.log('La imagen se encuentra disponible en: ' + downloadURL);
+            // Aquí puedes redirigir la ventana a una nueva URL que contiene el parámetro de la imagen 
+            // o tratas la información de succes directo con la URL resultante de otra manera.
             window.location.href = window.location.href.split('?')[0] + '?url=' + encodeURIComponent(downloadURL);
         });
     }).catch(function(error) {
-        console.error('Error al subir el archivo:', error);
+        console.error('Ocurrió un error al subir el archivo: ', error);
     });
 }
+
+
 
 </script>
 </body>
