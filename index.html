@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Subir archivo a Firebase v1</title>
+    <title>Subir archivo a Firebase</title>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
     <script>
@@ -21,9 +21,9 @@
 </head>
 <body>
 
-<div>Subir archivo a Firebase v1</div>
+<div>Subir archivo a Firebase</div>
 <script>
-   function subirArchivo(file) {
+function subirArchivo(file) {
     // Asegúrate de ajustar esta ruta según necesites
     var rutaDeCarga = 'media/proj_iDtR68Uec2W1ohmGzgtMRo/app_aYniA6tJPMc2DH943XAihq/dataApplications/' + file.name;
     var storageRef = firebase.storage().ref(rutaDeCarga);
@@ -32,8 +32,19 @@
         console.log('Archivo subido con éxito');
         snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log('Archivo disponible en:', downloadURL);
-            // Muestra la URL en una alerta
-            alert('Archivo disponible en: ' + downloadURL);
+            
+            // Crear un nuevo elemento img
+            var imgElement = document.createElement('img');
+            
+            // Establecer el atributo src con la URL del archivo subido
+            imgElement.src = downloadURL;
+            
+            // Opcional: Ajustar el estilo del elemento img
+            imgElement.style.maxWidth = '100%'; // Para asegurar que la imagen no sea más grande que el ancho de la pantalla
+            imgElement.style.height = 'auto'; // Para mantener la proporción de la imagen
+            
+            // Añadir el elemento img al cuerpo del documento para mostrarlo en pantalla
+            document.body.appendChild(imgElement);
         });
     }).catch(function(error) {
         console.error('Error al subir el archivo:', error);
